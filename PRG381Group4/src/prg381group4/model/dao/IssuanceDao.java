@@ -179,9 +179,50 @@ public class IssuanceDao extends BaseDao<Issuance> {
     }
 
     /** Deleting an issuance must give the stock back. TODO (Juan): supervisor only. */
-    @Override
+   @Override
     public boolean delete(int id) throws DataAccessException {
-        // TODO (Juan): same transaction pattern as issue(), but add the quantity back.
-        throw new UnsupportedOperationException("Not implemented yet");
+        Connection conn = null;
+        try {
+            conn = DBConnection.getConnection();
+            conn.setAutoCommit(false);
+
+            int materialId;
+            int quantity;
+            String checkSql = "SELECT material_id, quantity FROM issuance WHERE issuance_id = ?";
+            try (PreparedStatement ps = conn.prepareStatement(checkSql)) {
+                ps.setInt(1, id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) {
+                        conn.rollback();
+                        return false;
+                    }
+                    materialId = rs.getInt("material_id");
+                    quantity = rs.getInt("quantity");
+                }
+            }
+
+            int rows;
+            try (PreparedStatement ps = conn.prepareStatement(
+                    "DELETE FROM issuance WHERE issuance_id = ?")) {
+                ps.setInt(1, id);
+                rows = ps.executeUpdate();
+            }
+
+            try (PreparedStatement ps = conn.prepareStatement(
+                    "UPDATE material SET quantity = quantity + ? WHERE material_id = ?")) {
+                ps.setInt(1, quantity);
+                ps.setInt(2, materialId);
+                ps.executeUpdate();
+            }
+
+            conn.commit();
+            return rows > 0;
+
+        } catch (SQLException e) {
+            rollbackQuietly(conn);
+            throw new DataAccessException("Deleting issuance failed: " + e.getMessage(), e);
+        } finally {
+            closeQuietly(conn);
+        }
     }
 }
