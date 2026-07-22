@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 import prg381group4.model.dao.DBConnection;
 import prg381group4.model.dao.SchemaInitializer;
 import prg381group4.util.DataAccessException;
+import prg381group4.view.*;
 
 /**
  * Application entry point.
@@ -41,6 +42,8 @@ public class PRG381Group4 {
         //
         //     java.awt.EventQueue.invokeLater(() -> new LoginFrame().setVisible(true));
         //
+        new MainFrame().setVisible(true);
+        
         JOptionPane.showMessageDialog(null,
                 "Database is up and seeded.\n\n"
                 + "Login accounts:\n"
