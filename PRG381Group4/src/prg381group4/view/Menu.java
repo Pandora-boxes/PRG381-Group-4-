@@ -55,7 +55,7 @@ private void init(){
         PanelMoving.setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/prg381group4/Icons/bucket (2).png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/prg381group4/icon/Icon.png"))); // NOI18N
         jLabel1.setText("Univercity Cleaning");
 
         javax.swing.GroupLayout PanelMovingLayout = new javax.swing.GroupLayout(PanelMoving);
