@@ -36,12 +36,18 @@ public class MainFrame extends javax.swing.JFrame {
                     case 5:
                         break;
                     case 7:
+                        // Reports are re-created on each click so they always
+                        // show the latest data from the database.
+                        setFrame(new InventoryReportPanel());
                         break;
                     case 8:
+                        setFrame(new LowStockReportPanel());
                         break;
                     case 9:
+                        setFrame(new IssuanceHistoryReportPanel());
                         break;
                     case 10:
+                        setFrame(new MaterialUsageReportPanel());
                         break;
                     case 11:
                         break;
