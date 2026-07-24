@@ -11,13 +11,17 @@ public class MainFrame extends javax.swing.JFrame {
     private CleanersFrame cleanFrame;
     private IssuanceFrame issuFrame;
     private SuppliersFrame suppFrame;
-    private UsersFrame userFrame;
-    private DashBoard dashFrame;
+    private CleanersFrame userFrame;
+    private Dashboard dashFrame;
     public MainFrame() {
         initComponents();
         setBackground(new Color(0,0,0,0));
-        dashFrame = new DashBoard();
+        dashFrame = new Dashboard();
         matFrame = new MaterialsFrame();
+        cleanFrame = new CleanersFrame();
+        issuFrame = new IssuanceFrame();
+        suppFrame = new SuppliersFrame();
+        
         menu.initMoving(MainFrame.this);
         menu.addEventMenuSelected(new EventMenuSelected(){
             @Override
@@ -30,10 +34,13 @@ public class MainFrame extends javax.swing.JFrame {
                         setFrame(matFrame);
                         break;
                     case 3:
+                        setFrame(suppFrame);
                         break;
                     case 4:
+                        setFrame(cleanFrame);
                         break;
                     case 5:
+                        setFrame(issuFrame);
                         break;
                     case 7:
                         // Reports are re-created on each click so they always
